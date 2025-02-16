@@ -17,7 +17,6 @@ public class MaxArrayElement {
                 max = arr[i];
             }
         }
-        System.out.print("The max element is: ");
-        System.out.println(max);
+        System.out.print("The max element is: " + max);
     }
 }
