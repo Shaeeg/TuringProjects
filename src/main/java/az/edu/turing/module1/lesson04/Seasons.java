@@ -39,7 +39,9 @@ public class Seasons {
                 break;
             case "December":
                 System.out.println(day < 21 ? "Autumn" : "Winter");
-
+            default:
+                System.out.println("Wrong date");
+                break;
         }
     }
 }
