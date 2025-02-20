@@ -1,0 +1,32 @@
+package az.edu.turing.module1.lesson05;
+
+import java.util.Scanner;
+
+public class MaxTwoDimensionalArrayElement {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter rows");
+        int row = scanner.nextInt();
+        System.out.println("Enter columns");
+        int column = scanner.nextInt();
+        int[][] multiArray = new int[row][column];
+        System.out.println("Enter the elements");
+        for (int i = 0; i < multiArray.length; i++) {
+            for (int j = 0; j < multiArray[i].length; j++) {
+                multiArray[i][j] = scanner.nextInt();
+            }
+        }
+        int max = multiArray[0][0];
+        for (int i = 0; i < multiArray.length; i++) {
+            for (int j = 0; j < multiArray[i].length; j++) {
+                if (multiArray[i][j] > max) {
+                    max = multiArray[i][j];
+                }
+            }
+        }
+        System.out.println("The maximum element is: " + max);
+
+
+    }
+}
