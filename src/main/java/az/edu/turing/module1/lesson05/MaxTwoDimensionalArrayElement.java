@@ -20,14 +20,19 @@ public class MaxTwoDimensionalArrayElement {
             }
         }
         int max = multiArray[0][0];
+        int min = max;
         for (int[] ints : multiArray) {
             for (int anInt : ints) {
                 if (anInt > max) {
                     max = anInt;
                 }
+                if (anInt < min) {
+                    min = anInt;
+                }
             }
         }
         System.out.println("The maximum element is: " + max);
+        System.out.println("The minimum element is: " + min);
 
 
     }
