@@ -33,7 +33,5 @@ public class MaxTwoDimensionalArrayElement {
         }
         System.out.println("The maximum element is: " + max);
         System.out.println("The minimum element is: " + min);
-
-
     }
 }
