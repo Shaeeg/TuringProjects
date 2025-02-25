@@ -29,7 +29,7 @@ public class ShootingAtTheSquare {
             }
             row = getValidInput(sc, "Please enter the row", size);
             col = getValidInput(sc, "Please enter the column", size);
-            if (targetSquare[row][col] == true) {
+            if (targetSquare[row][col]) {
                 hits++;
                 System.out.println("You got one!\n");
                 square[row][col] = 'X';
@@ -78,12 +78,10 @@ public class ShootingAtTheSquare {
                     return input - 1;
                 } else {
                     System.out.println("Please enter a number between 1 and 5.");
-                    continue;
                 }
             } else {
                 System.out.println("Please enter an INTEGER.");
                 sc.nextLine();
-                continue;
             }
         }
     }
