@@ -24,13 +24,25 @@ public class Course {
             System.out.println("Course is full.");
             return;
         }
-        students[studentCount++] = student;
-        for (int i = 0; i < student.getCourses().length; i++) {
-            if (student.getCourses()[i] == this) {
+        for (int i = 0; i < studentCount; i++) {
+            if (students[i] == student) {
                 return;
             }
         }
-        student.enrollInCourse(this);
+
+        students[studentCount++] = student;
+
+        boolean alreadyEnrolled = false;
+        for (int i = 0; i < student.getCourses().length; i++) {
+            if (student.getCourses()[i] == this) {
+                alreadyEnrolled = true;
+                break;
+            }
+        }
+
+        if (!alreadyEnrolled) {
+            student.enrollInCourse(this);
+        }
     }
 
     public double calculateCourseGpa() {
@@ -39,8 +51,12 @@ public class Course {
         }
         double totalGpa = 0;
         for (Student student : students) {
-            if (student != null) {
-                totalGpa += student.calculateGpa();
+            if(student != null) {
+                for (int i = 0; i < student.getCourses().length; i++) {
+                    if (student.getCourses()[i] == this) {
+                        totalGpa += student.getGrades()[i];
+                    }
+                }
             }
         }
         return totalGpa / studentCount;
@@ -103,9 +119,8 @@ public class Course {
         return "Course{" +
                 "courseCode=" + courseCode +
                 ", courseName='" + courseName + '\'' +
-                ", professor=" + professor +
-                ", students=" + Arrays.toString(students) +
-                ", studentCount=" + studentCount +
+                ", professor=" + professor.getFullName() +  // Just the professor's name, not the whole professor object
+                ", studentCount=" + studentCount +  // Show how many students are enrolled
                 '}';
     }
 }

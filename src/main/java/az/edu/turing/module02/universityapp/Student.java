@@ -17,26 +17,37 @@ public class Student extends Person {
         this.courses = new Course[courseCount];
         this.courseNames = new String[courseCount];
         this.enrolledCourses = 0;
-        university.addPeople(this);
+        university.addStudent(this);
     }
 
     public void enrollInCourse(Course course) {
-            if (course == null){
+        if (course == null) {
+            return;
+        }
+        for (int i = 0; i < enrolledCourses; i++) {
+            if (courses[i] == course) {
+                System.out.println("Course is already enrolled");
                 return;
             }
-            for (int i = 0; i < enrolledCourses; i++) {
-                if (courses[i] == course) {
-                    System.out.println("Course is already enrolled");
-                    return;
-                }
+        }
+        if (enrolledCourses >= courses.length) {
+            System.out.println("Course count exceeds the limit of " + courses.length);
+            return;
+        }
+
+        courses[enrolledCourses++] = course;
+
+        boolean alreadyAdded = false;
+        for (int i = 0; i < course.getStudents().length; i++) {
+            if (course.getStudents()[i] == this) {
+                alreadyAdded = true;
+                break;
             }
-            if (enrolledCourses >= courses.length) {
-                System.out.println("Course count exceeds the limit of " + enrolledCourses);
-                return;
-            }
-            courseNames[enrolledCourses] = course.getCourseName();
-            courses[enrolledCourses++] = course;
+        }
+
+        if (!alreadyAdded) {
             course.addStudent(this);
+        }
     }
 
     public double calculateGpa() {
@@ -84,6 +95,15 @@ public class Student extends Person {
         }
     }
 
+    public double getGradeForCourse(Course course) {
+        for (int i = 0; i < courses.length; i++) {
+            if (courses[i] == course) {
+                return grades[i];
+            }
+        }
+        return 0.0;
+    }
+
     public String getMajor() {
         return major;
     }
@@ -108,21 +128,42 @@ public class Student extends Person {
         this.courses = courses;
     }
 
+    public int getEnrolledCourses() {
+        return enrolledCourses;
+    }
+
+    public void setEnrolledCourses(int enrolledCourses) {
+        this.enrolledCourses = enrolledCourses;
+    }
+
+    public String[] getCourseNames() {
+        return courseNames;
+    }
+
+    public void setCourseNames(String[] courseNames) {
+        this.courseNames = courseNames;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Student student = (Student) o;
-        return Objects.equals(major, student.major) && Objects.deepEquals(courses, student.courses) && Objects.deepEquals(grades, student.grades);
+        return enrolledCourses == student.enrolledCourses && Objects.equals(major, student.major) && Objects.deepEquals(courses, student.courses) && Objects.deepEquals(grades, student.grades) && Objects.deepEquals(courseNames, student.courseNames);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), major, Arrays.hashCode(courses), Arrays.hashCode(grades));
+        return Objects.hash(super.hashCode(), major, Arrays.hashCode(courses), Arrays.hashCode(grades), enrolledCourses, Arrays.hashCode(courseNames));
     }
 
     @Override
     public String toString() {
-        return super.toString() + ", major: " + major + ", grades: " + Arrays.toString(grades) + ", courses: " + Arrays.toString(courseNames);
+        return super.toString() +
+                "fullName='" + getFullName() + '\'' +
+                ", major='" + major + '\'' +
+                ", enrolledCourses=" + enrolledCourses +  // Show how many courses the student is enrolled in
+                '}';
     }
+
 }
